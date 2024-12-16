@@ -1,0 +1,536 @@
+#insertion and shell
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+def shell_sort(arr):
+    n = len(arr)
+    gap = n // 2
+    while gap > 0:
+        for i in range(gap, n):
+            temp = arr[i]
+            j = i
+            while j >= gap and arr[j - gap] > temp:
+                arr[j] = arr[j - gap]
+                j -= gap
+            arr[j] = temp
+        gap //= 2
+def display_top_five(arr):
+    print("Top five scores:")
+    for score in arr[:5]:
+        print(score)
+def main():
+    percentages = [85.5, 78.0, 92.5, 88.0, 76.5, 90.0, 84.0, 95.5, 89.0, 81.5] insertion_sorted_percentages = percentages[:] insertion_sort(insertion_sorted_percentages)
+    print("Sorted using insertion sort:")
+    display_top_five(insertion_sorted_percentages)
+    shell_sorted_percentages = percentages[:]    shell_sort(shell_sorted_percentages)
+    print("\nSorted using shell sort:") display_top_five(shell_sorted_percentages)
+if __name__ == "__main__":
+    main()
+
+
+
+
+.......
+#palindrome
+#include <iostream>
+#include <stack>
+#include <cctype>
+#include <string>
+
+using namespace std;
+
+bool isPalindrome(string str) {
+    stack<char> s;
+    
+    // Push alphanumeric characters to the stack in lowercase
+    for (char ch : str) {
+        if (isalnum(ch)) {
+            s.push(tolower(ch));
+        }
+    }
+    
+    // Check if the string is a palindrome
+    for (char ch : str) {
+        if (isalnum(ch)) {
+            if (s.top() != tolower(ch)) {
+                return false;
+            }
+            s.pop();
+        }
+    }
+    
+    return true;
+}
+
+int main() {
+    string str;
+    cout << "Enter a string: ";
+    getline(cin, str);
+
+    if (isPalindrome(str)) {
+        cout << "The string is a palindrome." << endl;
+    } else {
+        cout << "The string is not a palindrome." << endl;
+    }
+
+    return 0;
+}
+......
+
+
+acc balance 
+def deposit(balance, amount):
+    """Deposits the specified amount into the balance."""
+    return balance + amount
+
+def withdraw(balance, amount):
+    """Withdraws the specified amount from the balance if possible."""
+    if balance >= amount:
+        return balance - amount
+    else:
+        print("Withdrawal denied. Insufficient funds.")
+        return balance
+
+def process_transactions(transactions):
+    """Processes a list of transactions and returns the final balance."""
+    balance = 0
+    for transaction in transactions:
+        if transaction[0] == 'D':
+            balance = deposit(balance, transaction[1])
+        elif transaction[0] == 'W':
+            balance = withdraw(balance, transaction[1])
+    return balance
+
+# Input the transaction log from console
+transaction_log = input("Enter the transaction log: ").split()
+
+# Convert the transaction log into a list of tuples
+transactions = []
+for i in range(0, len(transaction_log), 2):
+    transaction_type = transaction_log[i]
+    amount = int(transaction_log[i + 1])
+    transactions.append((transaction_type, amount))
+
+# Compute the final balance
+final_balance = process_transactions(transactions)
+
+# Print the final balance
+print("Final balance:", final_balance)
+
+
+.....
+
+@parenthesised 
+#include <iostream>
+#include <stack>
+#include <string>
+
+using namespace std;
+
+bool isWellParenthesized(const string &expr) {
+    // Stack to store opening parentheses
+    stack<char> s;
+
+    // Traverse the expression
+    for (char ch : expr) {
+        // If the character is an opening parenthesis, push it to the stack
+        if (ch == '(' || ch == '{' || ch == '[') {
+            s.push(ch);
+        }
+        // If the character is a closing parenthesis
+        else if (ch == ')' || ch == '}' || ch == ']') {
+            // Check if stack is empty (no matching opening parenthesis)
+            if (s.empty()) {
+                return false;
+            }
+            // Pop the top of the stack and check if it matches the closing parenthesis
+            char top = s.top();
+            s.pop();
+            if ((ch == ')' && top != '(') || (ch == '}' && top != '{') || (ch == ']' && top != '[')) {
+                return false;
+            }
+        }
+    }
+
+    // If the stack is empty, the expression is well parenthesized
+    return s.empty();
+}
+
+int main() {
+    string expr;
+    cout << "Enter an expression: ";
+    getline(cin, expr);
+
+    if (isWellParenthesized(expr)) {
+        cout << "The expression is well parenthesized." << endl;
+    } else {
+        cout << "The expression is not well parenthesized." << endl;
+    }
+
+    return 0;
+}
+
+
+.......
+
+∆∆∆∆.  linked list.   ∆∆∆∆\\\\\\
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Node structure
+struct Node {
+    int prn;
+    string name;
+    Node* next;
+};
+
+// LinkedList class
+class LinkedList {
+private:
+    Node* head;
+
+public:
+    LinkedList() : head(nullptr) {}
+
+    // Add a node at the start (President)
+    void addAtStart(int prn, const string& name) {
+        Node* newNode = new Node{prn, name, head};
+        head = newNode;
+        cout << "President added successfully.\n";
+    }
+
+    // Add a node at the end (Secretary)
+    void addAtEnd(int prn, const string& name) {
+        Node* newNode = new Node{prn, name, nullptr};
+        if (!head) {
+            cout << "Add President first.\n";
+            delete newNode;
+            return;
+        }
+        Node* temp = head;
+        while (temp->next) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        cout << "Secretary added successfully.\n";
+    }
+
+    // Add a node in the middle (General member)
+    void addInMiddle(int prn, const string& name) {
+        Node* newNode = new Node{prn, name, nullptr};
+        if (!head) {
+            cout << "Add President first.\n";
+            delete newNode;
+            return;
+        }
+        Node* temp = head;
+        while (temp->next && temp->next->next) {
+            temp = temp->next;
+        }
+        newNode->next = temp->next;
+        temp->next = newNode;
+        cout << "Member added successfully.\n";
+    }
+
+    // Delete a node at the start (President)
+    void deleteAtStart() {
+        if (!head) {
+            cout << "List is empty. No members to delete.\n";
+            return;
+        }
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        cout << "President deleted successfully.\n";
+    }
+
+    // Delete a node at the end (Secretary)
+    void deleteAtEnd() {
+        if (!head) {
+            cout << "List is empty. No members to delete.\n";
+            return;
+        }
+        if (!head->next) {
+            delete head;
+            head = nullptr;
+            cout << "Secretary deleted successfully.\n";
+            return;
+        }
+        Node* temp = head;
+        while (temp->next && temp->next->next) {
+            temp = temp->next;
+        }
+        delete temp->next;
+        temp->next = nullptr;
+        cout << "Secretary deleted successfully.\n";
+    }
+
+    // Delete a node in the middle (General member)
+    void deleteInMiddle(int prn) {
+        if (!head) {
+            cout << "List is empty. No members to delete.\n";
+            return;
+        }
+        if (head->prn == prn) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            cout << "President deleted successfully.\n";
+            return;
+        }
+        Node* temp = head;
+        while (temp->next && temp->next->prn != prn) {
+            temp = temp->next;
+        }
+        if (temp->next) {
+            Node* toDelete = temp->next;
+            temp->next = temp->next->next;
+            delete toDelete;
+            cout << "Member deleted successfully.\n";
+        } else {
+            cout << "Member with PRN " << prn << " not found.\n";
+        }
+    }
+
+    // Compute total number of members
+    int countMembers() const {
+        int count = 0;
+        Node* temp = head;
+        while (temp) {
+            count++;
+            temp = temp->next;
+        }
+        return count;
+    }
+
+    // Display all members
+    void displayMembers() const {
+        if (!head) {
+            cout << "No members in the club.\n";
+            return;
+        }
+        Node* temp = head;
+        cout << "Club Members:\n";
+        while (temp) {
+            cout << "PRN: " << temp->prn << ", Name: " << temp->name << "\n";
+            temp = temp->next;
+        }
+    }
+
+    // Concatenate two lists
+    void concatenate(LinkedList& other) {
+        if (!head) {
+            head = other.head;
+            other.head = nullptr;
+            return;
+        }
+        Node* temp = head;
+        while (temp->next) {
+            temp = temp->next;
+        }
+        temp->next = other.head;
+        other.head = nullptr;
+        cout << "Lists concatenated successfully.\n";
+    }
+};
+
+// Main function
+int main() {
+    LinkedList divA, divB;
+
+    // Sample operations for Division A
+    divA.addAtStart(101, "Alice"); // Add President
+    divA.addInMiddle(102, "Bob"); // Add Member
+    divA.addAtEnd(103, "Charlie"); // Add Secretary
+    cout << "\nDivision A Members:\n";
+    divA.displayMembers();
+    cout << "\nTotal members in Division A: " << divA.countMembers() << "\n";
+    divA.deleteInMiddle(102); // Delete a member
+    cout << "\nAfter deletion, Division A Members:\n";
+    divA.displayMembers();
+
+    // Sample operations for Division B
+    divB.addAtStart(201, "David"); // Add President
+    divB.addInMiddle(202, "Eve"); // Add Member
+    divB.addAtEnd(203, "Frank"); // Add Secretary
+    cout << "\nDivision B Members:\n";
+    divB.displayMembers();
+
+    // Concatenate Division A and Division B
+    divA.concatenate(divB);
+    cout << "\nAfter concatenation, Combined Members:\n";
+    divA.displayMembers();
+
+    return 0;
+}
+
+
+...∆∆∆palindrome∆∆∆∆
+
+
+
+#include <iostream>
+#include <stack>
+#include <cctype>
+#include <string>
+
+using namespace std;
+
+bool isPalindrome(string str) {
+    stack<char> s;
+    for (char ch : str) {
+        if (isalnum(ch)) {
+            s.push(tolower(ch));
+        }
+    }
+
+    for (char ch : str) {
+        if (isalnum(ch)) {
+            if (s.top() != tolower(ch)) {
+                return false;
+            }
+            s.pop();
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    string str;
+    cout << "Enter a string: ";
+    getline(cin, str);
+
+    if (isPalindrome(str)) {
+        cout << "The string is a palindrome." << endl;
+    } else {
+        cout << "The string is not a palindrome." << endl;
+    }
+
+    return 0;
+}
+
+
+...... BOOK 📚 
+def delete_duplicates(books):
+    seen_titles = set()
+    unique_books = []
+    for book in books:
+        if book['title'] not in seen_titles:
+            unique_books.append(book)
+            seen_titles.add(book['title'])
+    return unique_books
+
+def display_books_by_cost(books):
+    sorted_books = sorted(books, key=lambda book: book['cost'])
+    for book in sorted_books:
+        print(f"'{book['title']}' by {book['author']} - ${book['cost']}")
+
+def count_books_more_than_500(books):
+    count = sum(1 for book in books if book['cost'] > 500)
+    return count
+
+def copy_books_less_than_500(books):
+    new_list = [book for book in books if book['cost'] < 500]
+    return new_list
+
+def main():
+    books = [
+        {'title': 'Book A', 'author': 'Author A', 'cost': 450},
+        {'title': 'Book B', 'author': 'Author B', 'cost': 600},
+        {'title': 'Book C', 'author': 'Author C', 'cost': 350},
+        {'title': 'Book D', 'author': 'Author D', 'cost': 700},
+        {'title': 'Book A', 'author': 'Author A', 'cost': 450},
+        {'title': 'Book E', 'author': 'Author E', 'cost': 100}
+    ]
+
+    print("Original Books:")
+    for book in books:
+        print(f"'{book['title']}' by {book['author']} - ${book['cost']}")
+
+    books = delete_duplicates(books)
+    print("\nBooks after deleting duplicates:")
+    for book in books:
+        print(f"'{book['title']}' by {book['author']} - ${book['cost']}")
+
+    print("\nBooks in ascending order based on cost:")
+    display_books_by_cost(books)
+
+    print("\nNumber of books with cost more than $500:", count_books_more_than_500(books))
+
+    books_less_than_500 = copy_books_less_than_500(books)
+    print("\nBooks with cost less than $500:")
+    for book in books_less_than_500:
+        print(f"'{book['title']}' by {book['author']} - ${book['cost']}")
+
+if __name__ == "__main__":
+    main()
+
+
+
+..∆∆∆∆∆∆.....∆∆∆∆.    withdrawal💲💲
+
+
+
+
+def deposit(balance, amount):
+    if amount > 0:
+        balance += amount
+        print(f"Deposited: ${amount}")
+    else:
+        print("Deposit amount must be positive.")
+    return balance
+
+def withdraw(balance, amount):
+    if amount > 0:
+        if balance >= amount:
+            balance -= amount
+            print(f"Withdrew: ${amount}")
+        else:
+            print("Insufficient funds. Withdrawal not allowed.")
+    else:
+        print("Withdrawal amount must be positive.")
+    return balance
+
+def get_balance(balance):
+    return balance
+
+def process_transaction(balance, transaction):
+    action, amount = transaction.split()
+    amount = int(amount)
+    if action == 'D':
+        balance = deposit(balance, amount)
+    elif action == 'W':
+        balance = withdraw(balance, amount)
+    else:
+        print(f"Invalid transaction type: {action}")
+    return balance
+
+def main():
+    balance = 0
+    transactions = [
+        'D 300',
+        'D 300',
+        'W 200',
+        'D 100'
+    ]
+
+    for transaction in transactions:
+        balance = process_transaction(balance, transaction)
+
+    print(f"Final balance: ${get_balance(balance)}")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
